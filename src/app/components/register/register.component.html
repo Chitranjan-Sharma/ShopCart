@@ -1,0 +1,36 @@
+<div class="row d-flex justify-content-center ">
+  <div class="card col-md-3 m-5 p-5" style="padding: 25px">
+    <div class="row">
+      <h1 class="text-center">Register</h1>
+
+      <h6 class="mt-5">Email</h6>
+      <input
+        class="form-control form-control-lg"
+        type="email"
+        [(ngModel)]="email"
+        required
+      />
+
+      <h6 class="mt-5">Password</h6>
+      <input
+        class="form-control form-control-lg"
+        type="password"
+        [(ngModel)]="password"
+        required
+      />
+
+      <a routerLink="register_page">Forgotten password?</a>
+      <button
+        class="btn btn-lg fw-bold btn-success mt-5"
+        (click)="registerUser()"
+      >
+        Register
+      </button>
+      <p class="fw-bold text-danger">{{ errorMessage }}</p>
+      <h6 class="mt-5 text-center">
+        Already a customer !
+        <button class="btn btn-link" (click)="gotoLoginPage()">Login</button>
+      </h6>
+    </div>
+  </div>
+</div>

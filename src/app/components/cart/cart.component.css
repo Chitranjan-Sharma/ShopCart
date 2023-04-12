@@ -1,0 +1,14 @@
+.productImg {
+  object-fit: cover;
+  height: auto;
+  background-size: cover;
+  width: 250px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.ratingBg {
+  width: 24px;
+  height: 24px;
+  object-fit: fill;
+}

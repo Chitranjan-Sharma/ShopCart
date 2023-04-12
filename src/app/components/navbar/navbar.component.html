@@ -1,0 +1,63 @@
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid px-5">
+    <span class="navbar-brand mb-0 h1 fw-bold">ShopCart</span>
+
+    <div class="d-flex justify-content-center">
+      <input
+        class="form-control"
+        type="email"
+        style="min-width: 400px"
+        placeholder="Search by brand, product ..."
+        [(ngModel)] = "searchData"
+      />
+      <button class="btn btn-success mx-3" (click)="searchProducts()">Search</button>
+    </div>
+
+    <ul class="nav justify-content-center fw-bold">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" routerLink="/"
+          >Products</a
+        >
+      </li>
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Categories
+        </a>
+        <ul class="dropdown-menu px-2">
+          <li><a class="dropdown-item">Electronics</a></li>
+          <li><a class="dropdown-item">Cloths</a></li>
+          <li><a class="dropdown-item">Shoes/Sleepers</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link position-relative" routerLink="cart_page"
+          >Cart
+          <span
+            class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-danger"
+          >
+            {{ api.allCartItems.length }}
+            <span class="visually-hidden">Cart Items</span>
+          </span></a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          routerLink="login_page"
+          *ngIf="!api.isLoggedIn; else logOut"
+          >Login</a
+        >
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<ng-template #logOut>
+  <a class="nav-link" routerLink="login_page" (click)="logOutUser()">Log-Out</a>
+</ng-template>

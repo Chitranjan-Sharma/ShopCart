@@ -1,0 +1,20 @@
+img {
+  width: 100%;
+  height: fit-content;
+}
+
+.ratingBg {
+  width: 24px;
+  height: 24px;
+  object-fit: fill;
+}
+
+.btn {
+  width: 150px;
+}
+
+.spy {
+  height: auto;
+  overflow-x: scroll;
+}
+

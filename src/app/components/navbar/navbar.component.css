@@ -1,0 +1,9 @@
+a:hover{
+    background-color: beige;
+    border-radius: 25px;
+}
+
+li{
+    margin-left: 10px;
+    margin-right: 10px;
+}
