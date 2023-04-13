@@ -62,7 +62,7 @@ export class ApiService {
   ProductData: Product = new Product();
 
   getAllProducts() {
-    this.http.get(this.baseUrl + 'Products').subscribe(
+    this.http.get(this.baseUrl + 'ProductItems').subscribe(
       (response) => {
         this.productList = response as Product[];
       },

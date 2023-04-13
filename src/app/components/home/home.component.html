@@ -1,11 +1,11 @@
-<div class=" p-5">
-  <div class="row d-flex justify-content-between">
+<div class="p-5">
+  <div class="row d-flex justify-content-center">
     <div
       *ngFor="let product of api.productList"
       class="p-3 col-md-3 text-start"
       (click)="gotoProductDetailPage(product)"
     >
-      <img class="productImg " src="{{ product.ImageUrl }}" />
+      <img class="productImg object-fit-contain" src="{{ product.ImageUrl }}" />
 
       <div class="text-start px-2">
         <h6 class="text-truncate">{{ product.ProductName }}</h6>
