@@ -1,1 +1,27 @@
-<p>orders works!</p>
+<div class="container">
+  <div class="card mt-4 p-2" *ngFor="let o of api.myOrderList">
+    <div class="row d-flex justify-content-between align-items-center">
+      <div class="col-md-3">
+        <img
+          class="object-fit-contain w-100"
+          src="{{ o.Product.ImageUrl }}"
+          alt="Image not loaded"
+        />
+      </div>
+
+      <div class="col-md-3">
+        <h5>{{ o.Product.ProductName }}</h5>
+        <h3>{{ o.Product.Price | currency : "INR" }}</h3>
+        <h6>Qty : {{ o.Order.Quantity }}</h6>
+      </div>
+
+      <div class="col-md-3">
+        <h5>Status : {{ o.Order.OrderStatus }}</h5>
+
+        <button class="btn btn-light" (click)="printInvoice(o)">
+          Print Invoice
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

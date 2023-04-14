@@ -17,6 +17,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { InvoiceComponent } from './components/invoice/invoice.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ProductDetailsComponent } from './components/product-details/product-de
     LoginComponent,
     RegisterComponent,
     ProductDetailsComponent,
+    InvoiceComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],

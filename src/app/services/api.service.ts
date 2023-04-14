@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Product } from '../models/product';
 import { CartItem } from '../models/cart-item';
 import { OrderItem } from '../models/order';
+import { MyOrderItem } from '../models/my-order';
 
 @Injectable({
   providedIn: 'root',
@@ -25,8 +26,8 @@ export class ApiService {
 
       if (allUsers != null) {
         allUsers.forEach((user) => {
-          if (user.Email.toLowerCase === email.toLowerCase) {
-            if (user.Password === password) {
+          if (user.Email == email) {
+            if (user.Password == password) {
               this.UserData = user;
               this.isLoggedIn = true;
               this.router.navigate(['']);
@@ -137,8 +138,44 @@ export class ApiService {
       );
   }
 
-  //Post order data
+  //My order list
+  myOrderList: MyOrderItem[] = [];
+  singleOrderItem: MyOrderItem = new MyOrderItem();
 
+  getMyOrders() {
+    this.http.get(this.baseUrl + 'OrderItems').subscribe(
+      (response) => {
+        const orderList = response as OrderItem[];
+
+        orderList.forEach((item) => {
+          if (item.UserId == this.UserData.UserId) {
+            const myOrderItem: MyOrderItem = new MyOrderItem();
+            myOrderItem.Order = item;
+
+            this.getSingleProduct(item.ProductId).subscribe(
+              (res) => {
+                myOrderItem.Product = res as Product;
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
+
+            this.myOrderList.push(myOrderItem);
+          }
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  getSingleProduct(id: number) {
+    return this.http.get(this.baseUrl + 'ProductItems/' + id);
+  }
+
+  //Post order data
   postOrderData(OrderData: OrderItem) {
     this.http.post(this.baseUrl + 'OrderItems', OrderData).subscribe(
       (res) => {

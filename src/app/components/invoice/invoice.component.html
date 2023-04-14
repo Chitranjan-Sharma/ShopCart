@@ -1,0 +1,29 @@
+<div class="container p-5">
+  <button class="btn btn-light" (click)="printInvoice()">Print</button>
+  <h4>Product Details</h4>
+
+  <div class="col-md-3">
+    <img
+      class="w-100 object-fit-contain"
+      src="{{ myOrderData.Product.ImageUrl }}"
+    />
+  </div>
+  <div class="col-md-3">
+    <h6>
+      {{ myOrderData.Product.ProductName }} <br />
+      {{ myOrderData.Product.BrandName }} <br />
+      Price:{{ myOrderData.Product.Price | currency : "INR" }} <br />
+      Qty:{{ myOrderData.Order.Quantity }} <br />
+      Total: {{ myOrderData.Order.TotalPrice | currency : "INR" }}
+    </h6>
+  </div>
+
+  <h4 class="mt-5">Delivery Details</h4>
+  <p>
+    {{ myOrderData.Order.CustomerName }} <br />
+    {{ myOrderData.Order.DeliveryAddress }} <br />
+    {{ myOrderData.Order.CustomerPhone }} <br />
+    OD Type: {{ myOrderData.Order.PaymentMode }} <br />
+    OD Status: {{ myOrderData.Order.OrderStatus }}
+  </p>
+</div>

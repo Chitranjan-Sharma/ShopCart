@@ -8,9 +8,11 @@
         type="email"
         style="min-width: 400px"
         placeholder="Search by brand, product ..."
-        [(ngModel)] = "searchData"
+        [(ngModel)]="searchData"
       />
-      <button class="btn btn-success mx-3" (click)="searchProducts()">Search</button>
+      <button class="btn btn-success mx-3" (click)="searchProducts()">
+        Search
+      </button>
     </div>
 
     <ul class="nav justify-content-center fw-bold">
@@ -33,6 +35,12 @@
           <li><a class="dropdown-item">Cloths</a></li>
           <li><a class="dropdown-item">Shoes/Sleepers</a></li>
         </ul>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" (click)="myOrderPage()"
+          >My Orders</a
+        >
       </li>
 
       <li class="nav-item">

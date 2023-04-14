@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { CartData } from 'src/app/models/cart';
+import { CartItem } from 'src/app/models/cart-item';
+import { MyOrderItem } from 'src/app/models/my-order';
 import { Product } from 'src/app/models/product';
 import { User } from 'src/app/models/user';
 import { ApiService } from 'src/app/services/api.service';
@@ -19,9 +22,12 @@ export class NavbarComponent {
 
   logOutUser() {
     this.api.isLoggedIn = false;
-    this.api.allCartItems = [];
     this.api.UserData = new User();
     this.api.ProductData = new Product();
+    this.api.allCartItems = [];
+    this.api.myOrderList = [];
+    this.api.singleCartItem = new CartItem();
+    this.api.singleOrderItem = new MyOrderItem();
   }
 
   searchProducts() {
@@ -40,5 +46,13 @@ export class NavbarComponent {
     this.api.router.navigate(['']);
 
     return;
+  }
+
+  myOrderPage() {
+    if (this.api.isLoggedIn) {
+      this.api.router.navigate(['orders_page']);
+    } else {
+      this.api.router.navigate(['login_page']);
+    }
   }
 }
