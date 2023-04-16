@@ -1,121 +1,149 @@
-<div class="container">
-  <div class="row mt-5">
-    <div class="col">
-      <div class="card p-3 mb-3" *ngFor="let item of cartProductList">
-        <div class="d-flex">
-          <img
-            class="productImg object-fit-contain"
-            src="{{ item.ProductData.ImageUrl }}"
-            alt=""
-          />
-          <div class="mx-3">
-            <h4>{{ item.ProductData.ProductName }}</h4>
-            <p>{{ item.ProductData.BrandName }}</p>
-            <h3 class="text-danger">
-              {{ item.ProductData.Price | currency : "INR" }}
-            </h3>
-            <div class="d-flex">
-              <img class="ratingBg" src="/assets/rating.jpg" />
-              <p class="">{{ item.ProductData.Rating }}/5</p>
-            </div>
-            <div class="d-flex align-items-center">
-              <button
-                class="btn btn-danger fw-bold btn-sm"
-                (click)="minusQuantity(item)"
-              >
-                -
-              </button>
-              <h5 class="mx-3">{{ item.Quantity }}</h5>
-              <button
-                class="btn btn-success fw-bold btn-sm"
-                (click)="addQuantity(item)"
-              >
-                +
-              </button>
-            </div>
-
-            <button class="btn btn-primary mt-2" (click)="removeFromCart(item)">
-              Remove
-            </button>
+<div class="container" *ngIf="api.allCartItems.length != 0">
+  <div class="row mt-5 justify-content-evenly">
+    <div class="p-3 mb-3" *ngFor="let item of cartProductList">
+      <div class="d-flex justify-content-evenly align-items-center">
+        <img
+          class="productImg object-fit-contain col-md-2"
+          src="{{ item.ProductData.ImageUrl }}"
+          alt=""
+        />
+        <div class="mx-3 col-md-3">
+          <h4>{{ item.ProductData.ProductName }}</h4>
+          <p>{{ item.ProductData.BrandName }}</p>
+          <h3 class="text-danger">
+            {{ item.ProductData.Price | currency : "INR" }}
+          </h3>
+          <div class="d-flex">
+            <img class="ratingBg" src="/assets/rating.jpg" />
+            <p class="">{{ item.ProductData.Rating }}/5</p>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-10">
-          <h2 class="text-danger">
-            Total : {{ totalPrice | currency : "INR" }}
-          </h2>
 
-          <input
-            class="form-control mt-3 form-control-lg"
-            type="text"
-            [(ngModel)]="OrderData.CustomerName"
-            placeholder="Name"
-            required
-          />
-
-          <input
-            class="form-control mt-3 form-control-lg"
-            type="text"
-            [(ngModel)]="OrderData.CustomerPhone"
-            placeholder="Phone"
-            required
-          />
-
-          <textarea
-            class="form-control mt-3 form-control-lg"
-            type="text"
-            [(ngModel)]="OrderData.DeliveryAddress"
-            placeholder="Address"
-            required
-          ></textarea>
-
-          <div class="dropdown mt-3">
+        <div style="width: 100px">
+          <div class="d-flex row align-items-center">
             <button
-              class="btn btn-secondary dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
+              class="col btn btn-danger fw-bold btn-sm"
+              (click)="minusQuantity(item)"
             >
-              {{ OrderData.PaymentMode }}
+              -
             </button>
-            <ul class="dropdown-menu">
-              <li>
-                <button
-                  class="dropdown-item"
-                  (click)="OrderData.PaymentMode = 'Pay On Delivery'"
-                >
-                  Pay On Delivery
-                </button>
-              </li>
-
-              <li>
-                <button
-                  class="dropdown-item"
-                  (click)="OrderData.PaymentMode = 'BHIM UPI'"
-                >
-                  BHIM UPI
-                </button>
-              </li>
-            </ul>
+            <h4 class="col text-center">{{ item.Quantity }}</h4>
+            <button
+              class="col btn btn-success fw-bold btn-sm"
+              (click)="addQuantity(item)"
+            >
+              +
+            </button>
           </div>
 
-          <div class="mt-3" *ngIf="OrderData.PaymentMode == 'BHIM UPI'">
-            <p>Scan this qr code to complete payment and then place order !</p>
-            <img
-              src="/assets/ShopCartQrCode.png"
-              style="height: 250px; width: 250px"
-            />
-          </div>
-
-          <button class="btn btn-primary mt-3 fw-bold" (click)="placeOrder()">
-            Check-Out
+          <button
+            class="btn btn-primary mt-2 fw-bold w-100"
+            (click)="removeFromCart(item)"
+          >
+            Remove
           </button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="w-100 position-relative">
+    <button
+      class="btn btn-primary mt-5 fw-bold position-absolute top-0 start-50 translate-middle-x"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#MyCartPage"
+      aria-controls="offcanvasRight"
+    >
+      Total : {{ totalPrice | currency : "INR" }} Check-Out
+    </button>
+  </div>
+</div>
+
+<div
+  class="offcanvas offcanvas-end"
+  data-bs-backdrop="static"
+  tabindex="-1"
+  id="MyCartPage"
+  aria-labelledby="staticBackdropLabel"
+>
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="staticBackdropLabel">Offcanvas</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="col-md-10">
+      <h2 class="text-danger">Total : {{ totalPrice | currency : "INR" }}</h2>
+
+      <input
+        class="form-control mt-3 form-control-lg"
+        type="text"
+        [(ngModel)]="OrderData.CustomerName"
+        placeholder="Name"
+        required
+      />
+
+      <input
+        class="form-control mt-3 form-control-lg"
+        type="text"
+        [(ngModel)]="OrderData.CustomerPhone"
+        placeholder="Phone"
+        required
+      />
+
+      <textarea
+        class="form-control mt-3 form-control-lg"
+        type="text"
+        [(ngModel)]="OrderData.DeliveryAddress"
+        placeholder="Address"
+        required
+      ></textarea>
+
+      <div class="dropdown mt-3">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {{ OrderData.PaymentMode }}
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <button
+              class="dropdown-item"
+              (click)="OrderData.PaymentMode = 'Pay On Delivery'"
+            >
+              Pay On Delivery
+            </button>
+          </li>
+
+          <li>
+            <button
+              class="dropdown-item"
+              (click)="OrderData.PaymentMode = 'BHIM UPI'"
+            >
+              BHIM UPI
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="mt-3" *ngIf="OrderData.PaymentMode == 'BHIM UPI'">
+        <p>Scan this qr code to complete payment and then place order !</p>
+        <img
+          src="/assets/ShopCartQrCode.png"
+          style="height: 250px; width: 250px"
+        />
+      </div>
+
+      <button class="btn btn-primary mt-3 fw-bold" (click)="placeOrder()">
+        Check-Out
+      </button>
     </div>
   </div>
 </div>

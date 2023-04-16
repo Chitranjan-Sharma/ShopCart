@@ -3,10 +3,14 @@
     <div class="row d-flex justify-content-between align-items-center">
       <div class="col-md-3">
         <img
-          class="object-fit-contain w-100"
+          class="object-fit-contain w-100 position-relative"
           src="{{ o.Product.ImageUrl }}"
-          alt="Image not loaded"
         />
+        <div class="text-center m-5" *ngIf="o.Product.ImageUrl == ''">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
       </div>
 
       <div class="col-md-3">
@@ -16,7 +20,10 @@
       </div>
 
       <div class="col-md-3">
-        <h5>Status : {{ o.Order.OrderStatus }}</h5>
+        <h6>
+          Delivery Address <br />
+          <p>{{ o.Order.DeliveryAddress }}</p>
+        </h6>
 
         <button class="btn btn-light" (click)="printInvoice(o)">
           Print Invoice

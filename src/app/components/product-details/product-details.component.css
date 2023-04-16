@@ -1,6 +1,7 @@
 img {
   width: 100%;
-  height: fit-content;
+  height: 250px;
+  object-fit: contain;
 }
 
 .ratingBg {

@@ -8,11 +8,14 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  constructor(private router: Router, private api: ApiService) {}
+  constructor(private router: Router, private api: ApiService) {
+    this.loginBtnLicked = false;
+  }
 
   errorMessage = '';
   email = '';
   password = '';
+  loginBtnLicked: boolean = false;
 
   gotoRegisterPage() {
     this.api.errorMessage = '';
@@ -20,6 +23,7 @@ export class LoginComponent {
   }
 
   loginToUser() {
+    this.loginBtnLicked = true;
     this.api.userLogin(this.email, this.password);
     this.errorMessage = this.api.errorMessage;
   }

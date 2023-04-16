@@ -8,18 +8,22 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  constructor(private router: Router, private api: ApiService) {}
+  constructor(private router: Router, private api: ApiService) {
+    this.registerBtnLicked = false;
+  }
 
   errorMessage = '';
   email = '';
   password = '';
+  registerBtnLicked: boolean = false;
 
   gotoLoginPage() {
-    this.api.errorMessage = "";
+    this.api.errorMessage = '';
     this.router.navigate(['login_page']);
   }
 
   registerUser() {
+    this.registerBtnLicked = true;
     this.api.postUser(this.email, this.password);
     this.errorMessage = this.api.errorMessage;
   }

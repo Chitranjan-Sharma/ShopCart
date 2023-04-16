@@ -1,11 +1,25 @@
 <div class="p-5">
+  <div class="text-center" *ngIf="api.productList.length == 0">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
   <div class="row d-flex justify-content-center">
     <div
       *ngFor="let product of api.productList"
-      class="p-3 col-md-3 text-start"
-      (click)="gotoProductDetailPage(product)"
+      class="p-3 col-md-3 text-start position-relative"
     >
-      <img class="productImg object-fit-contain" src="{{ product.ImageUrl }}" />
+      <img
+        src="assets/heart_icon.png"
+        class="position-absolute top-0 end-0 p-3"
+        (click)="addToWishlist(product)"
+      />
+
+      <img
+        class="productImg object-fit-contain"
+        src="{{ product.ImageUrl }}"
+        (click)="gotoProductDetailPage(product)"
+      />
 
       <div class="text-start px-2">
         <h6 class="text-truncate">{{ product.ProductName }}</h6>

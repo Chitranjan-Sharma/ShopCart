@@ -1,71 +1,283 @@
-<nav class="navbar bg-body-tertiary">
-  <div class="container-fluid px-5">
-    <span class="navbar-brand mb-0 h1 fw-bold">ShopCart</span>
+<nav class="px-5 py-2 bg-primary">
+  <ul class="nav align-items-center justify-content-center fw-bold">
+    <li class="nav-item">
+      <h4 class="fw-bold text-light">ShopCart</h4>
+    </li>
 
-    <div class="d-flex justify-content-center">
-      <input
-        class="form-control"
-        type="email"
-        style="min-width: 400px"
-        placeholder="Search by brand, product ..."
-        [(ngModel)]="searchData"
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" routerLink="/">Products</a>
+    </li>
+
+    <li class="nav-item dropdown">
+      <a
+        class="nav-link dropdown-toggle"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Categories
+      </a>
+      <ul class="dropdown-menu px-2 bg-primary">
+        <li><a class="dropdown-item fw-bold">Electronics</a></li>
+        <li><a class="dropdown-item fw-bold">Cloths & Wearing</a></li>
+        <li><a class="dropdown-item fw-bold">Shoes / Sleepers</a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" (click)="myOrderPage()"
+        >My Orders</a
+      >
+    </li>
+
+    <li class="nav-item">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search products..."
+          [(ngModel)]="searchData"
+          aria-describedby="button-addon2"
+        />
+        <button
+          class="btn btn-light"
+          type="button"
+          id="button-addon2"
+          (click)="searchProducts()"
+        >
+          Search
+        </button>
+      </div>
+    </li>
+
+    <li class="nav-item" (click)="getWishlist()">
+      <a
+        class="nav-link position-relative"
+        aria-current="page"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#wishListProducts"
+        aria-controls="offcanvasRight"
+      >
+        <img src="assets/heart_icon.png" style="height: 24px" /> Wishlist
+        <span
+          class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-danger"
+        >
+          {{ api.MyWishList.length }}
+          <span class="visually-hidden">Wishlist Items</span>
+        </span></a
+      >
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link position-relative" routerLink="cart_page"
+        >My Cart
+        <span
+          class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-danger"
+        >
+          {{ api.allCartItems.length }}
+          <span class="visually-hidden">Cart Items</span>
+        </span></a
+      >
+    </li>
+
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        routerLink="login_page"
+        *ngIf="!api.isLoggedIn; else logOut"
+        >Login</a
+      >
+    </li>
+
+    <li class="nav-item">
+      <img
+        src="{{ api.UserData.ProfilePictureUrl }}"
+        style="width: 35px; height: 35px"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasRight"
+        aria-controls="offcanvasRight"
+        class="rounded-circle"
       />
-      <button class="btn btn-success mx-3" (click)="searchProducts()">
-        Search
-      </button>
-    </div>
-
-    <ul class="nav justify-content-center fw-bold">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" routerLink="/"
-          >Products</a
-        >
-      </li>
-      <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          role="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          Categories
-        </a>
-        <ul class="dropdown-menu px-2">
-          <li><a class="dropdown-item">Electronics</a></li>
-          <li><a class="dropdown-item">Cloths</a></li>
-          <li><a class="dropdown-item">Shoes/Sleepers</a></li>
-        </ul>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" (click)="myOrderPage()"
-          >My Orders</a
-        >
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link position-relative" routerLink="cart_page"
-          >Cart
-          <span
-            class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-danger"
-          >
-            {{ api.allCartItems.length }}
-            <span class="visually-hidden">Cart Items</span>
-          </span></a
-        >
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          routerLink="login_page"
-          *ngIf="!api.isLoggedIn; else logOut"
-          >Login</a
-        >
-      </li>
-    </ul>
-  </div>
+    </li>
+  </ul>
 </nav>
 
 <ng-template #logOut>
   <a class="nav-link" routerLink="login_page" (click)="logOutUser()">Log-Out</a>
 </ng-template>
+
+<div
+  class="offcanvas offcanvas-end"
+  tabindex="-1"
+  id="offcanvasRight"
+  data-bs-scroll="false"
+  data-bs-backdrop="false"
+  aria-labelledby="offcanvasRightLabel"
+>
+  <div class="offcanvas-header fw-bold">
+    <h5 class="offcanvas-title" id="offcanvasRightLabel">My Profile</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+      (click)="resetBtn()"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="row d-flex justify-content-center mt-5">
+      <div class="w-75 align-items-center">
+        <img
+          src="{{ api.UserData.ProfilePictureUrl }}"
+          class="w-100 rounded-circle"
+        />
+      </div>
+
+      <h4 class="mt-5 text-center">{{ api.UserData.UserName }}</h4>
+      <h6 class="text-center">{{ api.UserData.Email }}</h6>
+
+      <div class="mt-3">
+        <h6 class="mt-3">Update profile picture</h6>
+
+        <div class="input-group">
+          <input
+            type="file"
+            class="form-control"
+            id="inputGroupFile04"
+            aria-describedby="inputGroupFileAddon04"
+            aria-label="Upload"
+            (change)="selectedImage($event)"
+          />
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            id="inputGroupFileAddon04"
+            (click)="updateProfilePicture()"
+          >
+            <div
+              *ngIf="imageUpdating"
+              class="spinner-grow spinner-grow-sm text-light me-1"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            Upload
+          </button>
+        </div>
+      </div>
+
+      <div class="list-group mt-5 text-start">
+        <button
+          type="button"
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+          (click)="btnChangeEmailClicked = true"
+        >
+          Change Email Address
+        </button>
+
+        <div class="px-5 py-2 card mb-5" *ngIf="btnChangeEmailClicked">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="New Email Address"
+            [(ngModel)]="newEmail"
+          />
+          <input
+            type="text"
+            class="form-control mt-2"
+            placeholder="Current password"
+            [(ngModel)]="currentPassword"
+          />
+          <p class="p-2 text-danger">{{ errorMessage }}</p>
+          <button class="btn btn-primary mt-2" (click)="updateEmail()">
+            Update Email Address
+          </button>
+        </div>
+
+        <button
+          type="button"
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+          (click)="btnChangePasswordClicked = true"
+        >
+          Change Password
+        </button>
+
+        <div class="px-5 py-2 card mb-5" *ngIf="btnChangePasswordClicked">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Current password"
+            [(ngModel)]="currentPassword"
+          />
+          <input
+            type="text"
+            class="form-control mt-2"
+            placeholder="New password"
+            [(ngModel)]="newPassword"
+          />
+          <p class="p-2 text-danger">{{ errorMessage }}</p>
+          <button class="btn btn-primary mt-2" (click)="changePassword()">
+            Change Password
+          </button>
+        </div>
+
+        <button
+          type="button"
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+        >
+          Manage Account
+        </button>
+
+        <button type="button" class="list-group-item list-group-item-action">
+          Privacy Policy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="offcanvas offcanvas-end col-md-3"
+  tabindex="-1"
+  id="wishListProducts"
+  data-bs-scroll="false"
+  data-bs-backdrop="false"
+  aria-labelledby="offcanvasRightLabel"
+>
+  <div class="offcanvas-header fw-bold">
+    <h5 class="offcanvas-title" id="offcanvasRightLabel">My Wishlist</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+      (click)="resetBtn()"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="card w-100 mt-2" *ngFor="let product of wishListProducts">
+      <img
+        class="productImg object-fit-contain"
+        src="{{ product.ImageUrl }}"
+        (click)="gotoProductDetailPage(product)"
+        data-bs-dismiss="offcanvas"
+      />
+
+      <div class="text-start px-2">
+        <h6 class="text-truncate">{{ product.ProductName }}</h6>
+
+        <div class="d-flex justify-content-start">
+          <h5 class="text-danger fw-bold">₹ {{ product.Price }}</h5>
+
+          <div class="d-flex mx-3">
+            <img class="ratingBg" src="/assets/rating.jpg" />
+            <p class="">{{ product.Rating }}/5</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

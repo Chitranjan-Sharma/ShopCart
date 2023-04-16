@@ -2,6 +2,7 @@ export class Product {
     ProductId:number = 0;
     ProductName:string = "";
     BrandName:string = "";
+    Category:string = "";
     ImageUrl:string = "";
     Price:number = 0;
     Rating:number = 0;
